@@ -2,10 +2,19 @@
 # Tracking and Notifying on AWS Sign-in activities
 
 Here is the high-level architecture of the solution
-![high-level architect](./docs/images/tracking-sign-in-activity.png)
+![high-level-architecture](./docs/images/high-level-architecture.png)
+
+1. IAM users and/or Root account sign-in to either Web Console or Mobile Console
+2. That sign-in activity is captured and tracked by Cloud Trail
+3. A Cloud Trail event is sent to Event Bridge automatically
+4. Event Bridge triggers a state machine in Step Function
+5. The state machine process the event and send a message SNS topic if needed
+6. SNS with a Lambda function subscribed to the topic will send appropriate notifications Slack
 
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+Details of the state machine - the main part of the solution
+![step-function-details](./docs/images/step-function-details.png)
+
 
 This project is set up like a standard Python project. The initialization
 process also creates a virtualenv within this project, stored under the `.venv`
