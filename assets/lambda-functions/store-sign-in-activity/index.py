@@ -22,7 +22,7 @@ def handler(event, context):
 
     user_identity = f'{user_identity_type}#Unknown'
     if user_identity_type == 'IAMUser':
-        user_identity = f'{user_identity_type}-{event_detail["userIdentity"]["userName"]}'
+        user_identity = f'{user_identity_type}#{event_detail["userIdentity"]["userName"]}'
     elif user_identity_type == 'Root':
         user_identity = f'{user_identity_type}#Root'
     elif user_identity == 'AssumedRole':
