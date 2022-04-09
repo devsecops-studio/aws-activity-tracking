@@ -1,12 +1,14 @@
 from aws_cdk import (
-    Stack,
     Duration,
+    Stack,
     aws_sns as sns,
     aws_sns_subscriptions as subscriptions,
     aws_lambda as lambda_,
+    aws_lambda_python_alpha as lambda_python,
     aws_iam as iam
 )
 from constructs import Construct
+import os
 
 
 class AwsActivityNotificationStack(Stack):
@@ -36,14 +38,15 @@ class AwsActivityNotificationStack(Stack):
             }
         )
 
-        slack_notify_function=lambda_.Function(self, 'SlackNotifyFunction',
-            function_name='aws-activity-slack-notify',
+        slack_notify_function=lambda_python.PythonFunction(self, 'SlackNotifyFunction',
+            function_name='aws-activity-slack-notifier',
+            entry='assets/lambda-functions/slack-notification',
             handler='index.handler',
             runtime=lambda_.Runtime.PYTHON_3_9,
             description='Notify to Slack for AWS activities',
-            code=lambda_.Code.from_asset(
-                path='assets/lambda-functions/slack-notification'
-            ),
+            environment={
+                'SLACK_WEBHOOK_ALARM_AWS': os.environ.get('SLACK_WEBHOOK_ALARM_AWS')
+            },
             timeout=Duration.minutes(2),
             memory_size=128,
             role=role

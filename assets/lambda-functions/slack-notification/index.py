@@ -2,13 +2,14 @@ import logging
 import requests
 import json
 from datetime import datetime
+import os
 
 
 logging.basicConfig(level=logging.DEBUG)
 logger=logging.getLogger(__name__)
 
 SLACK_CHANNELS = {
-    'alarm-aws': 'https://hooks.slack.com/services/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'
+    'alarm-aws': os.environ.get('SLACK_WEBHOOK_ALARM_AWS')
 }
 
 def handler(event, context):

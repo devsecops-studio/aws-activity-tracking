@@ -1,1 +1,2 @@
-aws-cdk-lib==2.1.0
+aws-cdk-lib==2.20.0
+aws-cdk.aws-lambda-python-alpha==2.20.0a0
