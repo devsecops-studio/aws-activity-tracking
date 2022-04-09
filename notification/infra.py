@@ -41,7 +41,6 @@ class AwsActivityNotificationStack(Stack):
         slack_notify_function=lambda_python.PythonFunction(self, 'SlackNotifyFunction',
             function_name='aws-activity-slack-notifier',
             entry='assets/lambda-functions/slack-notification',
-            handler='index.handler',
             runtime=lambda_.Runtime.PYTHON_3_9,
             description='Notify to Slack for AWS activities',
             environment={
